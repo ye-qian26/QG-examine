@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #register{
+            width: 600px;
+            margin:150px auto;
+        }
+    </style>
+</head>
+<body>
+
+<div id="register">
+    <h1 align="center">注册</h1>
+
+    <!--注册表单-->
+    <el-form :model="userRegister" status-icon :rules="rules" ref="userRegister" label-width="100px" class="demo-ruleForm">
+        <!--输入用户名-->
+        <el-form-item label="用户名" prop="username">
+            <el-input v-model="userRegister.username" placeholder="邮箱/手机号码"></el-input>
+        </el-form-item>
+        <!--输入密码-->
+        <el-form-item label="密码" prop="password">
+            <el-input type="password" placeholder="密码" v-model="userRegister.password" autocomplete="off"></el-input>
+        </el-form-item>
+        <!--输入确认密码-->
+        <el-form-item label="确认密码" prop="checkPassword">
+            <el-input type="password" placeholder="确认密码" v-model="userRegister.checkPassword" autocomplete="off"></el-input>
+        </el-form-item>
+        <!--选择注册或是重置信息-->
+        <el-form-item>
+            <el-button type="primary" @click="registerSubmit('userRegister')">注册</el-button>
+            <el-button @click="resetRegisterForm('userRegister')">重置</el-button>
+        </el-form-item>
+    </el-form>
+
+    <!--可选择前往登录页面-->
+    <el-link type="primary" v-bind:href="url" >已有账号？登录</el-link>
+
+</div>
+
+<script src="js/vue.js"></script>
+<script src="element-ui/lib/index.js"></script>
+<link rel="stylesheet" href="element-ui/lib/theme-chalk/index.css">
+
+<script>
+    new Vue({
+        el:'#register',
+        data(){
+            //制定密码规则
+            var validatePass = (rule, value, callback) => {
+                if (value === '') {
+                    callback(new Error('请输入密码'));
+                } else {
+                    if (this.userRegister.checkPassword !== '') {
+                        this.$refs.userRegister.validateField('checkPassword');
+                    }
+                    callback();
+                }
+            };
+            var validatePass2 = (rule, value, callback) => {
+                if (value === '') {
+                    callback(new Error('请再次输入密码'));
+                } else if (value !== this.userRegister.password) {
+                    callback(new Error('两次输入密码不一致!'));
+                } else {
+                    callback();
+                }
+            };
+            return{
+                //用户数据
+                userRegister: {
+                    username: '',
+                    tele: '',
+                    email: '',
+                    password: '',
+                    checkPassword: ''
+                },
+                //输入规则
+                rules: {
+                    //用户名规则
+                    username: [
+                        { required: true, message: '请输入邮箱/手机号', trigger: 'blur' }
+                    ],
+                    //密码规则
+                    password: [
+                        { required: true, message: '请输入密码', trigger: 'blur'},
+                        { min: 8, max: 12, message: '长度需在8到12个字符之间', trigger: 'blur'},
+                        { validator: validatePass, trigger: 'blur' }
+                    ],
+                    //再次输入密码规则
+                    checkPassword: [
+                        { required: true, message: '请再次输入密码', trigger: 'blur'},
+                        { validator: validatePass2, trigger: 'blur'}
+                    ]
+                },
+                url:'login.html'
+            }
+        },
+        methods: {
+            //提交注册信息
+            registerSubmit(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        alert('注册成功!');
+                        //发送ajax请求
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+            },
+            //重置信息
+            resetRegisterForm(formName) {
+                this.$refs[formName].resetFields();
+            }
+        }
+    })
+</script>
+</body>
+</html>

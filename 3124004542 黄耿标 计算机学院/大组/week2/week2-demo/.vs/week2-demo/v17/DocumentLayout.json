@@ -1,0 +1,156 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\28642\\source\\repos\\week2-demo\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{25C1651F-600D-4592-9955-E3B3DAD11696}|week2-demo.vcxproj|C:\\Users\\28642\\source\\repos\\week2-demo\\calculator.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{25C1651F-600D-4592-9955-E3B3DAD11696}|week2-demo.vcxproj|solutionrelative:calculator.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25C1651F-600D-4592-9955-E3B3DAD11696}|week2-demo.vcxproj|C:\\Users\\28642\\source\\repos\\week2-demo\\operatorLinkStack.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{25C1651F-600D-4592-9955-E3B3DAD11696}|week2-demo.vcxproj|solutionrelative:operatorLinkStack.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25C1651F-600D-4592-9955-E3B3DAD11696}|week2-demo.vcxproj|C:\\Users\\28642\\source\\repos\\week2-demo\\LinkStack.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{25C1651F-600D-4592-9955-E3B3DAD11696}|week2-demo.vcxproj|solutionrelative:LinkStack.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25C1651F-600D-4592-9955-E3B3DAD11696}|week2-demo.vcxproj|C:\\Users\\28642\\source\\repos\\week2-demo\\calculator.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{25C1651F-600D-4592-9955-E3B3DAD11696}|week2-demo.vcxproj|solutionrelative:calculator.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25C1651F-600D-4592-9955-E3B3DAD11696}|week2-demo.vcxproj|C:\\Users\\28642\\source\\repos\\week2-demo\\test.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{25C1651F-600D-4592-9955-E3B3DAD11696}|week2-demo.vcxproj|solutionrelative:test.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25C1651F-600D-4592-9955-E3B3DAD11696}|week2-demo.vcxproj|C:\\Users\\28642\\source\\repos\\week2-demo\\dataLinkStack.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{25C1651F-600D-4592-9955-E3B3DAD11696}|week2-demo.vcxproj|solutionrelative:dataLinkStack.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25C1651F-600D-4592-9955-E3B3DAD11696}|week2-demo.vcxproj|C:\\Users\\28642\\source\\repos\\week2-demo\\dataLinkStack.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{25C1651F-600D-4592-9955-E3B3DAD11696}|week2-demo.vcxproj|solutionrelative:dataLinkStack.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25C1651F-600D-4592-9955-E3B3DAD11696}|week2-demo.vcxproj|C:\\Users\\28642\\source\\repos\\week2-demo\\operatorLinkStack.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{25C1651F-600D-4592-9955-E3B3DAD11696}|week2-demo.vcxproj|solutionrelative:operatorLinkStack.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "LinkStack.c",
+              "DocumentMoniker": "C:\\Users\\28642\\source\\repos\\week2-demo\\LinkStack.c",
+              "RelativeDocumentMoniker": "LinkStack.c",
+              "ToolTip": "C:\\Users\\28642\\source\\repos\\week2-demo\\LinkStack.c",
+              "RelativeToolTip": "LinkStack.c",
+              "ViewState": "AgIAADgAAAAAAAAAAAAAAEsAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2025-03-26T10:17:28.317Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "test.c",
+              "DocumentMoniker": "C:\\Users\\28642\\source\\repos\\week2-demo\\test.c",
+              "RelativeDocumentMoniker": "test.c",
+              "ToolTip": "C:\\Users\\28642\\source\\repos\\week2-demo\\test.c",
+              "RelativeToolTip": "test.c",
+              "ViewState": "AgIAABcAAAAAAAAAAAAuwAAAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2025-03-23T09:30:07.338Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "calculator.c",
+              "DocumentMoniker": "C:\\Users\\28642\\source\\repos\\week2-demo\\calculator.c",
+              "RelativeDocumentMoniker": "calculator.c",
+              "ToolTip": "C:\\Users\\28642\\source\\repos\\week2-demo\\calculator.c",
+              "RelativeToolTip": "calculator.c",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2025-03-23T01:08:19.621Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "operatorLinkStack.c",
+              "DocumentMoniker": "C:\\Users\\28642\\source\\repos\\week2-demo\\operatorLinkStack.c",
+              "RelativeDocumentMoniker": "operatorLinkStack.c",
+              "ToolTip": "C:\\Users\\28642\\source\\repos\\week2-demo\\operatorLinkStack.c",
+              "RelativeToolTip": "operatorLinkStack.c",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAiwCUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2025-03-22T13:22:37.668Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "dataLinkStack.c",
+              "DocumentMoniker": "C:\\Users\\28642\\source\\repos\\week2-demo\\dataLinkStack.c",
+              "RelativeDocumentMoniker": "dataLinkStack.c",
+              "ToolTip": "C:\\Users\\28642\\source\\repos\\week2-demo\\dataLinkStack.c",
+              "RelativeToolTip": "dataLinkStack.c",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAAACYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2025-03-22T13:22:18.86Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "dataLinkStack.h",
+              "DocumentMoniker": "C:\\Users\\28642\\source\\repos\\week2-demo\\dataLinkStack.h",
+              "RelativeDocumentMoniker": "dataLinkStack.h",
+              "ToolTip": "C:\\Users\\28642\\source\\repos\\week2-demo\\dataLinkStack.h",
+              "RelativeToolTip": "dataLinkStack.h",
+              "ViewState": "AgIAABAAAAAAAAAAAAAAAAQAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-03-22T13:20:53.37Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "calculator.h",
+              "DocumentMoniker": "C:\\Users\\28642\\source\\repos\\week2-demo\\calculator.h",
+              "RelativeDocumentMoniker": "calculator.h",
+              "ToolTip": "C:\\Users\\28642\\source\\repos\\week2-demo\\calculator.h",
+              "RelativeToolTip": "calculator.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAswAUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-03-22T13:19:22.808Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "operatorLinkStack.h",
+              "DocumentMoniker": "C:\\Users\\28642\\source\\repos\\week2-demo\\operatorLinkStack.h",
+              "RelativeDocumentMoniker": "operatorLinkStack.h",
+              "ToolTip": "C:\\Users\\28642\\source\\repos\\week2-demo\\operatorLinkStack.h",
+              "RelativeToolTip": "operatorLinkStack.h",
+              "ViewState": "AgIAABMAAAAAAAAAAAAAAAgAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-03-22T13:21:39.392Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
