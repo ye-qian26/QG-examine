@@ -80,3 +80,32 @@
 
 - week2-demo**登录注册界面**分别为login.html 和 register.html
 
+**【手写Mybatis框架】**
+
+- 数据库**测试**用例：
+
+  ```mysql
+  DROP TABLE
+  IF EXISTS tb_user;
+  
+  -- 创建表
+  CREATE TABLE tb_user (
+  	id INT PRIMARY KEY auto_increment,
+  	NAME VARCHAR (20),
+  	age INT
+  );
+  
+  -- 添加数据
+  INSERT INTO tb_user (NAME, age)
+  VALUES
+  	('zhangsan', 18),
+  	('lisi', 20);
+  
+  -- 查询数据
+  SELECT
+  	*
+  FROM
+  	tb_user;
+  ```
+
+  
