@@ -109,3 +109,71 @@
   ```
 
   
+
+#### 【第三周】
+
+**【大组】**
+
+- **sort.c** 为五种排序方法的函数
+- **generate_data.c** 和 **read_data.c** 为有关**文件保存和读取并测试**的源文件
+- **sort_application.c** 为两道排序应用题
+
+**【小组】**
+
+- 数据库内容如下：
+
+  ```mysql
+  -- 创建 student 表
+  drop table if exists student;
+  CREATE TABLE student (
+  	id INT PRIMARY KEY AUTO_INCREMENT,
+  	student_name VARCHAR (50) NOT NULL,
+  	password varchar(20),
+  	tele varchar(20)
+  );
+  
+  select * from student;
+  
+  -- 创建 course 表
+  drop table if exists course;
+  CREATE TABLE course (
+  	id INT PRIMARY KEY AUTO_INCREMENT,
+  	course_name VARCHAR (100) NOT NULL,
+  	status INT,
+  	score DOUBLE(2,1)
+  );
+  
+  insert into course values(null, '语文', 0, 1.0),(null, '数学', 1, 2),(null, '英语', 0, 1.5),(null, '化学', 1, 0.5),(null, '生物', 0, 1.0);
+  
+  select * from course;
+  
+  -- 创建 student_course 表
+  drop table if exists student_course;
+  CREATE TABLE student_course (
+  	id INT PRIMARY KEY AUTO_INCREMENT,
+  	student_id INT,
+  	course_id INT,
+  	FOREIGN KEY (student_id) REFERENCES student (id),
+  	FOREIGN KEY (course_id) REFERENCES course (id)
+  );
+  
+  select * from student_course;
+  
+  -- 创建老师（管理员）表
+  DROP TABLE
+  IF EXISTS teacher;
+  
+  CREATE TABLE teacher (
+  	id INT PRIMARY KEY auto_increment,
+  	-- 主键
+  	username VARCHAR (32),
+  	-- 用户名
+  	password VARCHAR (32) 
+    -- 密码
+  );
+  
+  select * from teacher;
+  ```
+
+- **测试方法：**启动服务器后访问**login.html**或者**register.html**都可以
+

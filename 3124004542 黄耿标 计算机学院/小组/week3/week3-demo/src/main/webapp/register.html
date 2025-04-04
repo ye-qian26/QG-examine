@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <style>
+        #register{
+            width: 600px;
+            margin:150px auto;
+        }
+    </style>
+</head>
+<body>
+
+<div id="register">
+    <h1 align="center">注册</h1>
+
+    <!--注册表单-->
+    <el-form :model="form" status-icon :rules="rules" ref="userRegister" label-width="100px" class="demo-ruleForm">
+        <!--输入用户名-->
+        <el-form-item label="用户名" prop="name">
+            <el-input v-model="form.name" placeholder="用户名"></el-input>
+        </el-form-item>
+        <!--输入密码-->
+        <el-form-item label="密码" prop="password">
+            <el-input type="password" placeholder="密码" v-model="form.password" autocomplete="off"></el-input>
+        </el-form-item>
+        <!--输入确认密码-->
+        <el-form-item label="确认密码" prop="checkPassword">
+            <el-input type="password" placeholder="确认密码" v-model="form.checkPassword" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="身份选择">
+            <el-radio-group v-model="form.select">
+                <el-radio label="学生"></el-radio>
+                <el-radio label="老师"></el-radio>
+            </el-radio-group>
+        </el-form-item>
+        <!--验证码-->
+        <el-form-item label="验证码">
+            <el-input placeholder="验证码" v-model="form.checkCode"></el-input>
+            <el-image v-bind:src="checkCodeImg" @click="changeCheckCode"></el-image>
+            <el-button type="text" @click="changeCheckCode">看不清？换一张</el-button>
+        </el-form-item>
+        <!--选择注册或是重置信息-->
+        <el-form-item>
+            <el-button type="primary" @click="register('userRegister')">注册</el-button>
+            <el-button @click="resetRegisterForm('userRegister')">重置</el-button>
+        </el-form-item>
+    </el-form>
+
+    <!--可选择前往登录页面-->
+    <el-link type="primary" v-bind:href="url" >已有账号？登录</el-link>
+
+</div>
+
+<script src="js/vue.js"></script>
+<script src="element-ui/lib/index.js"></script>
+<script src="js/axios-0.18.0.js"></script>
+<link rel="stylesheet" href="element-ui/lib/theme-chalk/index.css">
+
+<script>
+    new Vue({
+        el:'#register',
+        data(){
+            //制定密码规则
+            var validatePass = (rule, value, callback) => {
+                if (value === '') {
+                    callback(new Error('请输入密码'));
+                } else {
+                    if (this.checkPassword !== '') {
+                        this.$refs.form.validateField('checkPassword');
+                    }
+                    callback();
+                }
+            };
+            var validatePass2 = (rule, value, callback) => {
+                if (value === '') {
+                    callback(new Error('请再次输入密码'));
+                } else if (value !== this.form.password) {
+                    callback(new Error('两次输入密码不一致!'));
+                } else {
+                    callback();
+                }
+            };
+            return{
+                //表单数据：
+                form:{
+                    name:'',
+                    password:'',
+                    select:'学生',
+                    checkCode:''
+                },
+                //学生数据
+                student: {
+                    id:'',
+                    studentName: '',
+                    tele: '',
+                    password: ''
+                },
+                //老师数据
+                teacher: {
+                    id:'',
+                    username:'',
+                    password:''
+                },
+                //确认密码
+                checkPassword:'',
+                //输入规则
+                rules: {
+                    //用户名规则
+                    name: [
+                        { required: true, message: '请输入用户名', trigger: 'blur' }
+                    ],
+                    //密码规则
+                    password: [
+                        { required: true, message: '请输入密码', trigger: 'blur'},
+                        { min: 8, max: 12, message: '长度需在8到12个字符之间', trigger: 'blur'},
+                        { validator: validatePass, trigger: 'blur' }
+                    ],
+                    //再次输入密码规则
+                    checkPassword: [
+                        { required: true, message: '请再次输入密码', trigger: 'blur'},
+                        { validator: validatePass2, trigger: 'blur'}
+                    ]
+                },
+                url:'login.html',
+                //验证码图片
+                checkCodeImg:'http://localhost:8080/week3-demo/checkCode/generateCheckCode'
+            }
+        },
+        methods: {
+            //提交注册信息
+            register(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        //判断验证码是否输入正确
+                        //发送ajax请求
+                        axios({
+                            method:"get",
+                            url:"http://localhost:8080/week3-demo/checkCode/verifyCheckCode?checkCode=" + this.form.checkCode
+                        }).then(resp => {
+                            if (resp.data === "success") {
+                                //输入正确
+                                //发送ajax请求
+                                if (this.form.select === '学生') {
+                                    //如果是学生
+                                    this.student.studentName = this.form.name;
+                                    this.student.password = this.form.password;
+
+                                    //判断用户名是否存在
+                                    //发送ajax请求判断
+                                    axios({
+                                        method:'post',
+                                        url:'http://localhost:8080/week3-demo/student/selectStudentByName',
+                                        data:this.student.studentName
+                                    }).then(resp => {
+                                        if (resp.data === null) {
+                                            //用户名不存在
+                                            //发送ajax请求注册
+                                            axios({
+                                                method: "post",
+                                                url: "http://localhost:8080/week3-demo/student/registerStudent",
+                                                data: this.student
+                                            }).then(resp => {
+                                                if (resp.data === "success") {
+                                                    //注册成功
+                                                    //消息提示
+                                                    this.$message({
+                                                        message: '学生信息注册成功！可前往登录！',
+                                                        type: 'success'
+                                                    });
+                                                }
+                                            })
+                                        } else {
+                                            //用户名已存在
+                                            this.$message({
+                                                message: '该用户名已存在',
+                                                type: 'warning'
+                                            });
+                                        }
+                                    })
+
+                                } else {
+                                    //如果是老师
+                                    this.teacher.username = this.form.name;
+                                    this.teacher.password = this.form.password;
+
+                                    //判断用户名是否已存在
+                                    //发送ajax请求判断
+                                    axios({
+                                        method:'post',
+                                        url:'http://localhost:8080/week3-demo/teacher/selectTeacherByName',
+                                        data:this.teacher.username
+                                    }).then(resp => {
+                                        if (resp.data === null) {
+                                            //用户名不存在
+
+                                            //发送ajax请求注册
+                                            axios({
+                                                method:"post",
+                                                url:"http://localhost:8080/week3-demo/teacher/registerTeacher",
+                                                data:this.teacher
+                                            }).then(resp =>{
+                                                if (resp.data === "success") {
+                                                    //注册成功
+                                                    //消息提示
+                                                    this.$message({
+                                                        message: '老师信息注册成功！可前往登录！',
+                                                        type: 'success'
+                                                    });
+                                                }
+                                            })
+                                        } else {
+                                            //用户名已存在
+                                            this.$message({
+                                                message:'用户名已存在',
+                                                type:'warning'
+                                            })
+                                        }
+                                    })
+
+                                }
+                            } else if (resp.data === "fail") {
+                                //输入错误
+                                this.$message.error("验证码错误");
+                                this.changeCheckCode();
+                            }
+                        })
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+
+            },
+            //更换验证码
+            changeCheckCode(){
+                this.checkCodeImg = "http://localhost:8080/week3-demo/checkCode/generateCheckCode?" + new Date().getMilliseconds()
+            },
+            //重置信息
+            resetRegisterForm(formName) {
+                this.$refs[formName].resetFields();
+            }
+        }
+    })
+</script>
+</body>
+</html>
