@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>老师界面</title>
+    <style>
+        .el-table .warning-row {
+            background: oldlace;
+        }
+
+        .el-table .success-row {
+            background: #f0f9eb;
+        }
+    </style>
+</head>
+<body>
+
+<div id="teacherPage">
+
+    <el-page-header @back="goBack" content="登录页面">
+    </el-page-header>
+    <!--个人信息表格-->
+    <template>
+        <el-table
+                :data="information"
+                style="width:100%"
+        >
+            <el-table-column
+                    prop="username"
+                    label="老师姓名"
+                    align="center"
+            >
+            </el-table-column>
+            <el-table-column
+                    align="center"
+                    label="操作">
+
+                <el-row slot-scope="scope">
+                    <el-button type="primary" @click="updateVisible=true">更改个人信息</el-button>
+                </el-row>
+            </el-table-column>
+        </el-table>
+    </template>
+
+    <!--修改个人信息对话框表单-->
+    <el-dialog
+            title="修改个人信息"
+            :visible.sync="updateVisible"
+            :before-close="handleCloseInformation"
+            width="30%"
+    >
+        <el-form ref="form1" :model="teacher" :rules="rules" label-width="80px">
+            <el-form-item label="用户名" prop="username">
+                <el-input v-model="teacher.username"></el-input>
+            </el-form-item>
+
+            <el-form-item label="密码" prop="password">
+                <el-input v-model="teacher.password" show-password></el-input>
+            </el-form-item>
+
+            <el-form-item>
+                <el-button type="primary" @click="updateInformation('form1')">提交</el-button>
+                <el-button @click="cancel">取消</el-button>
+            </el-form-item>
+        </el-form>
+
+    </el-dialog>
+
+    <!--学生表格-->
+    <template>
+        <el-table
+                :data="studentData"
+                style="width: 100%"
+                :row-class-name="tableRowClassName"
+                @selection-change="handleSelectionChange"
+                height="400"
+        >
+
+            <el-table-column
+                    type="index"
+                    width="50">
+            </el-table-column>
+
+            <el-table-column
+                    prop="studentName"
+                    label="学生姓名"
+                    align="center"
+            >
+            </el-table-column>
+            <el-table-column
+                    prop="tele"
+                    label="手机号"
+                    align="center"
+            >
+            </el-table-column>
+
+            <el-table-column
+                    align="center"
+                    label="操作">
+
+
+                <el-row slot-scope="scope">
+                    <el-button type="success" @click="selectCourseByStudent(scope.row)">查询已选课程</el-button>
+                    <el-button type="primary" @click="_updateStudent(scope.row)">修改</el-button>
+                </el-row>
+
+            </el-table-column>
+
+        </el-table>
+    </template>
+
+    <!--查看学生所选课程-->
+    <el-dialog title="已选课程" :visible.sync="dialogStudentVisible">
+        <el-table :data="selectedCourse">
+            <el-table-column
+                    type="index"
+                    width="50">
+            </el-table-column>
+            <el-table-column prop="courseName"  width="150"></el-table-column>
+        </el-table>
+    </el-dialog>
+
+    <!--修改学生信息对话框表单-->
+    <el-dialog
+            title="添加课程"
+            :visible.sync="updateStudentVisible"
+            :before-close="handleCloseStudent"
+            width="30%"
+    >
+        <el-form ref="form4" :model="student" :rules="rules" label-width="80px">
+            <el-form-item label="学生姓名">
+                <el-input v-model="student.studentName" disabled></el-input>
+            </el-form-item>
+
+            <el-form-item label="手机号" prop="tele">
+                <el-input v-model="student.tele"></el-input>
+            </el-form-item>
+
+            <el-form-item>
+                <el-button type="primary" @click="updateStudent('form4')">提交</el-button>
+                <el-button @click="cancelUpdateStudent">取消</el-button>
+            </el-form-item>
+        </el-form>
+
+    </el-dialog>
+
+    <!--搜索表单-->
+    <el-form :inline="true" :model="course" class="demo-form-inline">
+        <el-form-item label="课程名称">
+            <el-input v-model="course.courseName" placeholder="课程名称"></el-input>
+        </el-form-item>
+
+        <el-form-item>
+            <el-button type="primary" @click="onSubmit">查询</el-button>
+        </el-form-item>
+    </el-form>
+
+
+    <el-row>
+        <el-button type="primary" plain @click="dialogVisible = true">新增课程</el-button>
+    </el-row>
+
+    <!--添加课程数据对话框表单-->
+    <el-dialog
+            title="添加课程"
+            :visible.sync="dialogVisible"
+            :before-close="handleCloseAddCourse"
+            width="30%"
+    >
+
+        <el-form ref="form2" :model="course" :rules="rules" label-width="80px">
+            <el-form-item label="课程名称" prop="courseName">
+                <el-input v-model="course.courseName"></el-input>
+            </el-form-item>
+
+            <el-form-item label="学分" prop="score">
+                <el-input v-model="course.score"></el-input>
+            </el-form-item>
+
+            <el-form-item>
+                <el-button type="primary" @click="addCourse('form2')">提交</el-button>
+                <el-button @click="dialogVisible = false">取消</el-button>
+            </el-form-item>
+        </el-form>
+
+    </el-dialog>
+
+
+
+    <!--课程表格-->
+    <template>
+        <el-table
+                :data="tableData"
+                style="width: 100%"
+                :row-class-name="tableRowClassName"
+                @selection-change="handleSelectionChange"
+                height="500"
+        >
+            <el-table-column
+                    type="selection"
+                    width="55">
+            </el-table-column>
+            <el-table-column
+                    type="index"
+                    width="50">
+            </el-table-column>
+
+            <el-table-column
+                    prop="courseName"
+                    label="课程名称"
+                    align="center"
+            >
+            </el-table-column>
+            <el-table-column
+                    prop="score"
+                    label="学分"
+                    align="center"
+            >
+            </el-table-column>
+            <el-table-column
+                    prop="statusStr"
+                    align="center"
+                    label="当前状态">
+            </el-table-column>
+
+            <el-table-column
+                    align="center"
+                    label="操作">
+
+                <el-row slot-scope="scope">
+                    <el-button type="success" @click="selectStudentByCourse(scope.row)">查询门下学生</el-button>
+                    <el-button type="primary" @click="_updateCourse(scope.row)">修改</el-button>
+                    <el-button type="danger" plain @click="_deleteCourseById(scope.row)">删除</el-button>
+                </el-row>
+
+            </el-table-column>
+
+        </el-table>
+    </template>
+
+    <!--查看执行课程下的学生-->
+    <el-dialog title="门下学生" :visible.sync="dialogCourseVisible">
+        <el-table :data="selectedStudent">
+            <el-table-column
+                    type="index"
+                    width="50">
+            </el-table-column>
+            <el-table-column prop="studentName"  width="150"></el-table-column>
+        </el-table>
+    </el-dialog>
+
+    <!--修改课程数据对话框表单-->
+    <el-dialog
+            title="添加课程"
+            :visible.sync="updateCourseVisible"
+            :before-close="handleCloseUpdateCourse"
+            width="30%"
+    >
+        <el-form ref="form3" :model="course" :rules="rules" label-width="80px">
+            <el-form-item label="课程名称" prop="courseName">
+                <el-input v-model="course.courseName"></el-input>
+            </el-form-item>
+
+            <el-form-item label="学分" prop="score">
+                <el-input v-model="course.score"></el-input>
+            </el-form-item>
+
+            <el-form-item label="开课状态">
+                <el-switch v-model="course.status"
+                           active-value="1"
+                           inactive-value="0"
+                ></el-switch>
+            </el-form-item>
+
+            <el-form-item>
+                <el-button type="primary" @click="updateCourse('form3')">提交</el-button>
+                <el-button @click="cancelUpdateCourse">取消</el-button>
+            </el-form-item>
+        </el-form>
+
+    </el-dialog>
+
+
+
+</div>
+
+
+<script src="js/vue.js"></script>
+<script src="element-ui/lib/index.js"></script>
+<script src="js/axios-0.18.0.js"></script>
+<link rel="stylesheet" href="element-ui/lib/theme-chalk/index.css">
+
+
+<script>
+    new Vue({
+        el: "#teacherPage",
+        mounted() {
+            //加载个人信息
+            this.loadInformation();
+            //加载课程数据
+            this.selectAllCourse();
+            //加载学生数据
+            this.selectAllStudent();
+        },
+        methods: {
+            //查询所有课程
+            selectAllCourse() {
+                axios({
+                    method: "get",
+                    url: "http://localhost:8080/week3-demo/course/selectAllCourse"
+                }).then(resp => {
+                    this.tableData = resp.data;
+                })
+            },
+            //查询所有学生
+            selectAllStudent(){
+                axios({
+                    method: "get",
+                    url: "http://localhost:8080/week3-demo/student/selectAllStudent"
+                }).then(resp => {
+                    this.studentData = resp.data;
+                })
+            },
+            //个人信息修改
+            updateInformation(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        //判断用户名是否已经存在
+                        //发送ajax请求判断
+                        axios({
+                            method:'get',
+                            url:'http://localhost:8080/week3-demo/teacher/selectTeacherByName?id='
+                             + this.teacher.id + "&username=" + this.teacher.username
+                        }).then(resp => {
+                            if (resp.data === null){
+                                //用户名不存在，可以使用该用户名
+                                //发送ajax请求
+                                axios({
+                                    method: "post",
+                                    url: "http://localhost:8080/week3-demo/teacher/updateTeacher",
+                                    data: this.teacher
+                                }).then(resp => {
+                                    if (resp.data === "success") {
+                                        //修改成功
+                                        //关闭对话框
+                                        this.updateVisible = false;
+                                        //重新加载数据
+                                        this.selectTeacherById();
+                                        //消息提示
+                                        this.$message({
+                                            message: '修改个人信息成功！',
+                                            type: 'success'
+                                        });
+                                    }
+                                })
+                            } else {
+                                //用户名已存在，不能使用
+                                this.$message({
+                                    message:'用户名已存在',
+                                    type:'warning'
+                                })
+                            }
+                        })
+
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                })
+            },
+            //通过id查询老师
+            selectTeacherById() {
+                //发送ajax请求
+                axios({
+                    method: "post",
+                    url: "http://localhost:8080/week3-demo/teacher/selectTeacherById",
+                    data: this.teacher.id
+                }).then(resp => {
+                    this.teacher = resp.data;
+                    //重新加载个人信息
+                    this.loadInformation();
+                })
+            },
+            //加载个人信息
+            loadInformation(){
+                this.information[0] = this.teacher;
+            },
+            //添加课程数据
+            addCourse(formName){
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        //发送ajax请求
+                        axios({
+                            method: "post",
+                            url: "http://localhost:8080/week3-demo/course/addCourse",
+                            data: this.course
+                        }).then(resp => {
+                            if (resp.data === "success") {
+                                //添加成功
+                                //关闭对话框
+                                this.dialogVisible = false;
+
+                                //重新加载课程数据
+                                this.selectAllCourse();
+                                //消息提示
+                                this.$message({
+                                    message: '添加课程成功！',
+                                    type: 'success'
+                                });
+                            }
+                        })
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                })
+            },
+            //课程查询
+            onSubmit() {
+                if (this.course.courseName === '') {
+                    this.selectAllCourse();
+                } else {
+                    axios({
+                        method: "get",
+                        url: "http://localhost:8080/week3-demo/course/selectCourseByCourseName?courseName=" + this.course.courseName
+                    }).then(resp => {
+                        this.tableData = resp.data;
+                    })
+                }
+            },
+            //修改课程信息
+            _updateCourse(row){
+                this.updateCourseVisible = true;
+                this.course = row;
+            },
+            updateCourse(formName){
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        //发送ajax请求
+                        axios({
+                            method: "post",
+                            url: "http://localhost:8080/week3-demo/course/updateCourse",
+                            data: this.course
+                        }).then(resp => {
+                            if (resp.data === "success") {
+                                //修改成功
+                                //关闭对话框
+                                this.updateCourseVisible = false;
+
+                                //重新加载课程数据
+                                this.selectAllCourse();
+                                //消息提示
+                                this.$message({
+                                    message: '修改课程成功！',
+                                    type: 'success'
+                                });
+                            }
+                        })
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                })
+            },
+            //删除课程
+            _deleteCourseById(row){
+                this.course = row;
+                this.selectStudentByCourseId();
+                this.deleteCourseById();
+            },
+            deleteCourseById(){
+                this.$confirm('此操作将删除该课程, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+
+                    if (this.courseStudentCount === 0) {
+                        //该课程没有学生选择
+                        //发送ajax请求
+                        axios({
+                            method: "post",
+                            url: "http://localhost:8080/week3-demo/course/deleteCourseById",
+                            data: this.course.id
+                        }).then(resp => {
+                            if (resp.data === "success") {
+                                //删除成功
+                                //重新加载课程数据
+                                this.selectAllCourse();
+                                //消息提示
+                                this.$message({
+                                    message: '删除课程成功！',
+                                    type: 'success'
+                                });
+                            }
+                        })
+                    } else {
+                        //有学生选择
+                        this.$message.error('本门课程已有学生选择，无法删除');
+                    }
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
+            },
+            //通过课程id查询对应的学生
+            selectStudentByCourseId(){
+                //发送ajax请求
+                axios({
+                    method: "post",
+                    url: "http://localhost:8080/week3-demo/studentCourse/selectStudentByCourseId",
+                    data: this.course.id
+                }).then(resp => {
+                    if (resp.data !== "fail"){
+                        //查询成功
+                        this.courseStudentIds = resp.data;
+                        this.courseStudentCount = resp.data.length;
+                        console.log(this.courseStudentIds);
+                        console.log(this.courseStudentCount);
+                    } else {
+                        this.courseStudentIds = null;
+                        this.courseStudentCount = 0;
+                    }
+                })
+            },
+            //修改学生信息
+            _updateStudent(row){
+                this.student = row;
+                this.updateStudentVisible = true;
+            },
+            updateStudent(formName){
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        //发送ajax请求
+                        axios({
+                            method: "post",
+                            url: "http://localhost:8080/week3-demo/student/updateStudent",
+                            data: this.student
+                        }).then(resp => {
+                            if (resp.data === "success") {
+                                //修改成功
+                                //关闭对话框
+                                this.updateStudentVisible = false;
+
+                                //重新加载学生数据
+                                this.selectAllStudent();
+                                //消息提示
+                                this.$message({
+                                    message: '修改学生信息成功！',
+                                    type: 'success'
+                                });
+                            }
+                        })
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                })
+            },
+            //查询学生已选课程
+            selectCourseByStudent(row){
+                this.student = row;
+                //发送ajax请求
+                axios({
+                    method: "post",
+                    url: "http://localhost:8080/week3-demo/course/selectStudentAndCourseById",
+                    data: this.student.id
+                }).then(resp => {
+                    if (resp.data !== "fail") {
+                        //有数据
+                        this.selectedCourse = resp.data;
+                    } else {
+                        //无数据
+                        this.selectedCourse = null;
+                    }
+                })
+                this.dialogStudentVisible = true;
+            },
+            //查询课程门下学生
+            selectStudentByCourse(row){
+                this.course = row;
+                //发送ajax请求
+                axios({
+                    method: "post",
+                    url: "http://localhost:8080/week3-demo/student/selectStudentAndCourseById",
+                    data: this.course.id
+                }).then(resp => {
+                    if (resp.data !== "fail") {
+                        //有数据
+                        this.selectedStudent = resp.data;
+                    } else {
+                        //无数据
+                        this.selectedStudent = null;
+                    }
+                })
+                this.dialogCourseVisible = true;
+            },
+            //修改个人信息对话框取消方法
+            cancel() {
+                this.updateVisible = false;
+                this.selectTeacherById();
+                this.loadInformation();
+            },
+            //取消修改课程，回显数据
+            cancelUpdateCourse(){
+                this.updateCourseVisible = false;
+                this.selectAllCourse();
+            },
+            //取消修改学生信息，回显数据
+            cancelUpdateStudent(){
+                this.updateStudentVisible = false;
+                this.selectAllStudent();
+            },
+            handleSizeChange(val) {
+                console.log(`每页 ${val} 条`);
+            },
+            handleCurrentChange(val) {
+                console.log(`当前页: ${val}`);
+            },
+            tableRowClassName({row, rowIndex}) {
+                if (rowIndex === 1) {
+                    return 'warning-row';
+                } else if (rowIndex === 3) {
+                    return 'success-row';
+                }
+                return '';
+            },
+            // 复选框选中后执行的方法
+            handleSelectionChange(val) {
+                console.log(this.multipleSelection)
+            },
+            //返回
+            goBack(){
+                window.location.href="login.html";
+            },
+            //点‘X’号时回显数据
+            handleCloseInformation(done){
+                this.selectTeacherById();
+                done();
+            },
+            handleCloseStudent(done){
+                this.selectAllStudent();
+                done();
+            },
+            handleCloseAddCourse(done){
+                this.selectAllCourse();
+                done();
+            },
+            handleCloseUpdateCourse(done){
+                this.selectAllCourse();
+                done();
+            }
+        },
+        data() {
+            return {
+                //老师数据
+                teacher: {
+                    id: localStorage.getItem("id"),
+                    username: localStorage.getItem("username"),
+                    password: localStorage.getItem("password")
+                },
+                //学生数据
+                student: {
+                    id: '',
+                    studentName: '',
+                    tele: '',
+                },
+                //课程数据
+                course: {
+                    id: '',
+                    courseName: '',
+                    status: 0,
+                    score: ''
+                },
+                //个人信息表格
+                information: [],
+                // 修改个人信息对话框
+                updateVisible: false,
+                // 添加课程数据对话框
+                dialogVisible: false,
+                // 修改课程信息对话框
+                updateCourseVisible: false,
+                // 修改学生信息对话框
+                updateStudentVisible: false,
+                // 展示指定学生已选课程的对话框
+                dialogStudentVisible: false,
+                // 展示指定课程门下学生的对话框
+                dialogCourseVisible: false,
+                //课程表格
+                tableData: [],
+                //学生表格
+                studentData: [],
+                //所要删除的课程对应的学生id数组
+                courseStudentIds:[],
+                //所要删除的课程对应的学生数目
+                courseStudentCount: 0,
+                //指定学生已选择的课程表格
+                selectedCourse: [],
+                //指定课程门下的学生表格
+                selectedStudent: [],
+                //输入规则
+                rules: {
+                    //用户名规则
+                    courseName: [
+                        { required: true, message: '请输入课程名', trigger: 'blur' }
+                    ],
+                    username: [
+                        { required: true, message: '请输入用户名', trigger: 'blur' }
+                    ],
+                    //密码规则
+                    password: [
+                        { required: true, message: '请输入密码', trigger: 'blur' },
+                        { min: 8, max: 12, message: '长度需在8到12个字符之间', trigger: 'blur'}
+                    ],
+                    //学分规则
+                    score: [
+                        { required: true, message: '请输入学分', trigger: 'blur' },
+                        { pattern: /^(0\.5|([1-5](\.[05])?))$/, message: '格式：0.5~5.0，1 √ 1.5 √ 1.2 x', trigger: 'blur' },
+                    ],
+                    //手机号规则
+                    tele: [
+                        { required: true, message: '请输入手机号', trigger: 'blur' },
+                        { pattern: /^1[2-9]\d{9}$/, message: '请输入11个数字（首数字为1，且次数字不可为1）', trigger: 'blur'},
+                    ]
+                },
+            }
+        }
+    })
+
+
+</script>
+</body>
+</html>

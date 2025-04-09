@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <style>
+        #login{
+            width: 600px;
+            margin:150px auto;
+        }
+        #intercept{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div id="login">
+    <h1 align="center">登录</h1>
+    <div id="intercept" v-if="loginMsg"  align="center" >{{ loginMsg }}</div>
+    <!--登录表单-->
+    <el-form :model="form" :rules="rules" ref="loginForm" label-width="100px" class="demo-ruleForm">
+        <!--输入用户名信息-->
+        <el-form-item label="用户名" prop="name">
+            <el-input v-model="form.name" placeholder="用户名" ></el-input>
+        </el-form-item>
+        <!--输入密码-->
+        <el-form-item label="密码" prop="password">
+            <el-input placeholder="密码" v-model="form.password"  show-password></el-input>
+        </el-form-item>
+        <!--记住用户信息复选框-->
+        <!--<el-radio v-model="checked" label="1">记住我</el-radio>-->
+        <el-checkbox v-model="checked">记住我</el-checkbox>
+        <!--选择学生还是老师-->
+        <el-form-item label="身份选择">
+            <el-radio-group v-model="form.select">
+                <el-radio label="学生"></el-radio>
+                <el-radio label="老师"></el-radio>
+            </el-radio-group>
+        </el-form-item>
+        <el-form-item label="验证码">
+            <el-input placeholder="验证码" v-model="form.checkCode"></el-input>
+            <el-image v-bind:src="checkCodeImg" @click="changeCheckCode"></el-image>
+            <el-button type="text" @click="changeCheckCode">看不清？换一张</el-button>
+        </el-form-item>
+        <!--选择登录或是重置信息-->
+        <el-form-item>
+            <el-button type="primary" @click="loginSubmit('loginForm')">登录</el-button>
+            <el-button @click="resetLoginForm('loginForm')">重置</el-button>
+        </el-form-item>
+    </el-form>
+    <!--可前往注册页面-->
+    <el-link type="primary" v-bind:href="url" >没有账号？立即注册</el-link>
+</div>
+
+<script src="js/vue.js"></script>
+<script src="element-ui/lib/index.js"></script>
+<script src="js/axios-0.18.0.js"></script>
+<link rel="stylesheet" href="element-ui/lib/theme-chalk/index.css">
+
+<script>
+    new Vue({
+        el: "#login",
+        created(){
+            let searchParams = new URLSearchParams(window.location.search);
+            this.loginMsg = searchParams.get("loginMsg");
+
+
+            this.form.name = this.getCookie('name');
+            this.form.password = this.getCookie('password');
+        },
+        data() {
+            return {
+                //表单数据：
+                form:{
+                    name:'',
+                    password:'',
+                    select:'学生',
+                    checkCode:''
+                },
+                //学生数据
+                student: {
+                    id:'',
+                    studentName: '',
+                    tele: '',
+                    password: ''
+                },
+                //老师数据
+                teacher: {
+                    id:'',
+                    username:'',
+                    password:''
+                },
+                //输入规则
+                rules: {
+                    //用户名规则
+                    name: [
+                        { required: true, message: '请输入用户名', trigger: 'blur' }
+                    ],
+                    //密码规则
+                    password: [
+                        { required: true, message: '请输入密码', trigger: 'blur' },
+                        { min: 8, max: 12, message: '长度需在8到12个字符之间', trigger: 'blur'}
+                    ],
+                },
+                url:'register.html',
+                //验证码图片
+                checkCodeImg:'http://localhost:8080/week3-demo/checkCode/generateCheckCode',
+                //拦截信息
+                loginMsg:'',
+                //是否记住用户信息的标记
+                checked:false
+            }
+        },
+        methods: {
+            //提交登录信息
+            loginSubmit(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        //判断验证码是否输入正确
+                        //发送ajax请求
+                        axios({
+                            method:"get",
+                            url:"http://localhost:8080/week3-demo/checkCode/verifyCheckCode?checkCode=" + this.form.checkCode
+                        }).then(resp =>{
+                            if (resp.data === "success"){
+                                //输入正确
+
+                                //发送ajax请求
+                                if (this.form.select === '学生') {
+                                    this.student.studentName = this.form.name;
+                                    this.student.password = this.form.password;
+                                    //如果是学生
+                                    axios({
+                                        method: "get",
+                                        url: "http://localhost:8080/week3-demo/student/loginStudent?studentName="
+                                            + this.student.studentName + "&password=" + this.student.password + "&checked=" + this.checked
+                                    }).then(resp => {
+                                        if (resp.data !== "fail") {
+                                            //登录成功
+                                            this.student = resp.data;
+                                            //消息提示
+                                            this.$message({
+                                                message: '学生登录成功！',
+                                                type: 'success'
+                                            });
+                                            // 登录成功，将相关信息存储到localStorage
+                                            localStorage.setItem('id', this.student.id);
+                                            localStorage.setItem('studentName', this.student.studentName);
+                                            localStorage.setItem('password', this.student.password);
+                                            localStorage.setItem('tele', this.student.tele);
+                                            this.changeCheckCode();
+                                            // 跳转到student.html
+                                            window.location.href ='student.html';
+                                        } else if(resp.data === "fail") {
+                                            //没有相关信息，登录失败
+                                            this.$message.error('登录失败，请检查个人信息');
+                                        }
+                                    })
+                                } else {
+                                    //如果是老师
+                                    //将模数据转移到老师
+                                    this.teacher.username = this.form.name;
+                                    this.teacher.password = this.form.password;
+                                    axios({
+                                        method:"get",
+                                        url:"http://localhost:8080/week3-demo/teacher/loginTeacher?username="
+                                            + this.teacher.username + "&password=" + this.teacher.password + "&checked=" + this.checked
+                                    }).then(resp =>{
+                                        if (resp.data !== "fail") {
+                                            //登录成功
+                                            this.teacher = resp.data;
+                                            //将相关信息存储到localStorage
+                                            localStorage.setItem('id', this.teacher.id);
+                                            localStorage.setItem('username', this.teacher.username);
+                                            localStorage.setItem('password', this.teacher.password);
+                                            //消息提示
+                                            this.$message({
+                                                message: '登录成功！',
+                                                type: 'success'
+                                            });
+                                            window.location.href='teacher.html';
+                                        } else if(resp.data === "fail") {
+                                            //没有相关信息，登录失败
+                                            this.$message.error('登录失败，请检查个人信息');
+                                        }
+                                    })
+                                }
+                            } else if (resp.data === "fail"){
+                                //验证码输入错误
+                                this.$message.error('验证码错误');
+                                this.changeCheckCode();
+
+                            }
+                        })
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+            },
+            //更换验证码
+            changeCheckCode(){
+                this.checkCodeImg = "http://localhost:8080/week3-demo/checkCode/generateCheckCode?" + new Date().getMilliseconds()
+            },
+            //重置信息
+            resetLoginForm(formName) {
+                this.$refs[formName].resetFields();
+            },
+            //获取cookie信息
+            getCookie(name){
+                //console.log(document.cookie);
+                const cookies = document.cookie.split('; ');
+                for (let i = 0; i < cookies.length; i++) {
+                    const parts = cookies[i].split('=');
+                    const currentName = parts[0].trim();
+                    if (currentName === name) {
+                        return decodeURIComponent(parts[1]);
+                    }
+                }
+                return null;
+            }
+        }
+    })
+
+</script>
+</body>
+</html>

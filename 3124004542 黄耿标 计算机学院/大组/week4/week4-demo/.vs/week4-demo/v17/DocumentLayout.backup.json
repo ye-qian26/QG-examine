@@ -1,0 +1,109 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\28642\\source\\repos\\week4-demo\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{AE118F70-386C-436F-87C1-653EEA143669}|week4-demo.vcxproj|C:\\Users\\28642\\source\\repos\\week4-demo\\non_recursive_traversal.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{AE118F70-386C-436F-87C1-653EEA143669}|week4-demo.vcxproj|solutionrelative:non_recursive_traversal.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AE118F70-386C-436F-87C1-653EEA143669}|week4-demo.vcxproj|C:\\Users\\28642\\source\\repos\\week4-demo\\test.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{AE118F70-386C-436F-87C1-653EEA143669}|week4-demo.vcxproj|solutionrelative:test.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AE118F70-386C-436F-87C1-653EEA143669}|week4-demo.vcxproj|C:\\Users\\28642\\source\\repos\\week4-demo\\non_recursive_traversal.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{AE118F70-386C-436F-87C1-653EEA143669}|week4-demo.vcxproj|solutionrelative:non_recursive_traversal.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AE118F70-386C-436F-87C1-653EEA143669}|week4-demo.vcxproj|C:\\Users\\28642\\source\\repos\\week4-demo\\binary_sort_tree.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{AE118F70-386C-436F-87C1-653EEA143669}|week4-demo.vcxproj|solutionrelative:binary_sort_tree.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AE118F70-386C-436F-87C1-653EEA143669}|week4-demo.vcxproj|C:\\Users\\28642\\source\\repos\\week4-demo\\binary_sort_tree.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{AE118F70-386C-436F-87C1-653EEA143669}|week4-demo.vcxproj|solutionrelative:binary_sort_tree.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "non_recursive_traversal.c",
+              "DocumentMoniker": "C:\\Users\\28642\\source\\repos\\week4-demo\\non_recursive_traversal.c",
+              "RelativeDocumentMoniker": "non_recursive_traversal.c",
+              "ToolTip": "C:\\Users\\28642\\source\\repos\\week4-demo\\non_recursive_traversal.c*",
+              "RelativeToolTip": "non_recursive_traversal.c*",
+              "ViewState": "AgIAAMIAAAAAAAAAAAAAAMoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2025-04-06T01:32:45.994Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "non_recursive_traversal.h",
+              "DocumentMoniker": "C:\\Users\\28642\\source\\repos\\week4-demo\\non_recursive_traversal.h",
+              "RelativeDocumentMoniker": "non_recursive_traversal.h",
+              "ToolTip": "C:\\Users\\28642\\source\\repos\\week4-demo\\non_recursive_traversal.h",
+              "RelativeToolTip": "non_recursive_traversal.h",
+              "ViewState": "AgIAADcAAAAAAAAAAAAAwEYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-04-06T01:32:22.745Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "test.c",
+              "DocumentMoniker": "C:\\Users\\28642\\source\\repos\\week4-demo\\test.c",
+              "RelativeDocumentMoniker": "test.c",
+              "ToolTip": "C:\\Users\\28642\\source\\repos\\week4-demo\\test.c",
+              "RelativeToolTip": "test.c",
+              "ViewState": "AgIAABsAAAAAAAAAAAAAACgAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2025-04-05T03:10:55.754Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "binary_sort_tree.c",
+              "DocumentMoniker": "C:\\Users\\28642\\source\\repos\\week4-demo\\binary_sort_tree.c",
+              "RelativeDocumentMoniker": "binary_sort_tree.c",
+              "ToolTip": "C:\\Users\\28642\\source\\repos\\week4-demo\\binary_sort_tree.c",
+              "RelativeToolTip": "binary_sort_tree.c",
+              "ViewState": "AgIAAHUAAAAAAAAAAAAAAIEAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2025-04-05T03:10:41.332Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "binary_sort_tree.h",
+              "DocumentMoniker": "C:\\Users\\28642\\source\\repos\\week4-demo\\binary_sort_tree.h",
+              "RelativeDocumentMoniker": "binary_sort_tree.h",
+              "ToolTip": "C:\\Users\\28642\\source\\repos\\week4-demo\\binary_sort_tree.h",
+              "RelativeToolTip": "binary_sort_tree.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACMAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-04-05T03:10:21.167Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
